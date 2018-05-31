@@ -20,6 +20,8 @@ class CreateDesignsTable extends Migration
             $table->integer('design_face_price_id')
             $table->text('tag')->nullable();
             $table->string('image_path');
+            $table->integer('category_id');
+            $table->integer('sub_category_id');
             $table->timestamps();
         });
     }

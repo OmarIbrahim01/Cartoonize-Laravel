@@ -12,12 +12,30 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('home');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/who_we_are', [
+    'as' => 'about.who_we_are',
+    'uses' => 'AboutController@whoWeAre'
+]);
+
+Route::get('/contact_us', [
+    'as' => 'about.contact_us',
+    'uses' => 'AboutController@contactUs'
+]);
+
+
+Route::get('/designs', [
+    'as' => 'designs.index',
+    'uses' => 'DesignsController@index'
+]);
+
+
 
 
 Route::group(['prefix' => 'sudo'], function () {
