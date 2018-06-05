@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Design;
+use App\Category;
+use App\SubCategory;
+use App\Product;
+use App\DesignFacePrice;
 
 class DesignsController extends Controller
 {
@@ -13,7 +18,39 @@ class DesignsController extends Controller
      */
     public function index()
     {
-        return view('designs.index');
+        $cat = 'all';
+        $subcat = null;
+        $designs = Design::all()->sortByDesc('id');
+        return view('designs.index')->withDesigns($designs)->withCat($cat)->withSubcat($subcat);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function category($id)
+    {
+        $cat = Category::findOrFail($id);
+        $subcat = null;
+        $designs = Design::where('category_id', $id)->get()->sortByDesc('id');
+        return view('designs.index')->withDesigns($designs)->withCat($cat)->withSubcat($subcat);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function subCategory($category_id, $sub_category_id)
+    {
+        $cat = Category::findOrFail($category_id);
+        $subcat = SubCategory::findOrFail($sub_category_id);
+        $designs = Design::where([
+                            ['sub_category_id', '=', $sub_category_id],
+                            ['category_id', '=', $category_id],
+                        ])->get()->sortByDesc('id');
+        return view('designs.index')->withDesigns($designs)->withCat($cat)->withSubcat($subcat);
     }
 
     /**
@@ -45,7 +82,14 @@ class DesignsController extends Controller
      */
     public function show($id)
     {
-        //
+        $design = Design::findOrFail($id);
+        $products = Product::All();
+        $face_price = DesignFacePrice::where('active', true)->first();
+        return view('designs.show', [
+                            'design' => $design,
+                            'products' => $products,
+                            'face_price' => $face_price
+                        ]);
     }
 
     /**

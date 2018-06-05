@@ -35,6 +35,21 @@ Route::get('/designs', [
     'uses' => 'DesignsController@index'
 ]);
 
+Route::get('/category/{category_id}', [
+    'as' => 'designs.category',
+    'uses' => 'DesignsController@category'
+]);
+
+Route::get('/category/{category_id}/{sub_category_id}', [
+    'as' => 'designs.sub_category',
+    'uses' => 'DesignsController@subCategory'
+]);
+
+Route::get('/designs/{id}', [
+    'as' => 'designs.show',
+    'uses' => 'DesignsController@show'
+]);
+
 
 
 

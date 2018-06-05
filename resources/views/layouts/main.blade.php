@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Universal - All In 1 Template</title>
+    <title>Cartoonize</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
@@ -48,29 +48,24 @@
       <!-- Navbar Start-->
       <header class="nav-holder make-sticky">
         <div id="navbar" role="navigation" class="navbar navbar-expand-lg" style="background-color: #333;">
-          <div class="container"><a href="index.html" class="navbar-brand home"><img src="img/logo.png" alt="Universal logo" class="d-none d-md-inline-block" width="133"><img src="img/logo-small.png" alt="Universal logo" class="d-inline-block d-md-none"><span class="sr-only">Universal - go to homepage</span></a>
+          <div class="container"><a href="/" class="navbar-brand home"><img src="/img/logo.png" alt="Universal logo" class="d-none d-md-inline-block" width="138"><img src="/img/logo-small.png" alt="Universal logo" class="d-inline-block d-md-none"><span class="sr-only">Universal - go to homepage</span></a>
             <button type="button" data-toggle="collapse" data-target="#navigation" class="navbar-toggler btn-template-outlined"><span class="sr-only">Toggle navigation</span><i class="fa fa-align-justify"></i></button>
             <div id="navigation" class="navbar-collapse collapse">
               <ul class="nav navbar-nav ml-auto">
-                <li class="nav-item dropdown active"><a href="#" class="dropdown">Home</a></li>
+                <li class="nav-item dropdown active"><a href="/" class="dropdown">Home</a></li>
                 <li class="nav-item dropdown menu-large"><a href="#" data-toggle="dropdown" class="dropdown-toggle">Designs<b class="caret"></b></a>
                   <ul class="dropdown-menu megamenu">
                     <li>
                       <div class="row">
-                        <div class="col-lg-6"><img src="img/template-easy-customize.png" alt="" class="img-fluid d-none d-lg-block"></div>
+                        <div class="col-lg-6"><img src="/img/template-easy-customize.png" alt="" class="img-fluid d-none d-lg-block"></div>
                         <div class="col-lg-3 col-md-6">
-                          <h5>Shortcodes</h5>
+                          <h5>Categories</h5>
                           <ul class="list-unstyled mb-3">
-                            <li class="nav-item"><a href="template-accordions.html" class="nav-link">Accordions</a></li>
-                            <li class="nav-item"><a href="template-alerts.html" class="nav-link">Alerts</a></li>
-                            <li class="nav-item"><a href="template-buttons.html" class="nav-link">Buttons</a></li>
-                            <li class="nav-item"><a href="template-content-boxes.html" class="nav-link">Content boxes</a></li>
-                            <li class="nav-item"><a href="template-blocks.html" class="nav-link">Horizontal blocks</a></li>
-                            <li class="nav-item"><a href="template-pagination.html" class="nav-link">Pagination</a></li>
-                            <li class="nav-item"><a href="template-tabs.html" class="nav-link">Tabs</a></li>
-                            <li class="nav-item"><a href="template-typography.html" class="nav-link">Typography</a></li>
+                            @foreach($categories as $category)
+                            <li class="nav-item"><a href="{{route('designs.category', $category->id)}}" class="nav-link">{{$category->name}}</a></li>
+                            @endforeach
                           </ul>
-                          <a href="#" class="btn btn-template-outlined" style="padding: 10px !important;">View All</a>
+                          <a href="/designs" class="btn btn-template-outlined" style="padding: 10px !important;">View All</a>
                         </div>
                       </div>
                     </li>
@@ -80,8 +75,8 @@
                 <!-- ========== Contact dropdown ==================-->
                 <li class="nav-item dropdown"><a href="javascript: void(0)" data-toggle="dropdown" class="dropdown-toggle">About <b class="caret"></b></a>
                   <ul class="dropdown-menu">
-                    <li class="dropdown-item"><a href="contact.html" class="nav-link">Who Are We?</a></li>
-                    <li class="dropdown-item"><a href="contact2.html" class="nav-link">Contact Us</a></li>
+                    <li class="dropdown-item"><a href="/who_we_are" class="nav-link">Who Are We?</a></li>
+                    <li class="dropdown-item"><a href="/contact_us" class="nav-link">Contact Us</a></li>
                   </ul>
                 </li>
                 <!-- ========== Contact dropdown end ==================-->
@@ -176,19 +171,19 @@
               <h4 class="h6">Blog</h4>
               <ul class="list-unstyled footer-blog-list">
                 <li class="d-flex align-items-center">
-                  <div class="image"><img src="img/detailsquare.jpg" alt="..." class="img-fluid"></div>
+                  <div class="image"><img src="/img/detailsquare.jpg" alt="..." class="img-fluid"></div>
                   <div class="text">
                     <h5 class="mb-0"> <a href="post.html">Blog post name</a></h5>
                   </div>
                 </li>
                 <li class="d-flex align-items-center">
-                  <div class="image"><img src="img/detailsquare.jpg" alt="..." class="img-fluid"></div>
+                  <div class="image"><img src="/img/detailsquare.jpg" alt="..." class="img-fluid"></div>
                   <div class="text">
                     <h5 class="mb-0"> <a href="post.html">Blog post name</a></h5>
                   </div>
                 </li>
                 <li class="d-flex align-items-center">
-                  <div class="image"><img src="img/detailsquare.jpg" alt="..." class="img-fluid"></div>
+                  <div class="image"><img src="/img/detailsquare.jpg" alt="..." class="img-fluid"></div>
                   <div class="text">
                     <h5 class="mb-0"> <a href="post.html">Very very long blog post name</a></h5>
                   </div>
@@ -203,12 +198,12 @@
             </div>
             <div class="col-lg-3">
               <ul class="list-inline photo-stream">
-                <li class="list-inline-item"><a href="#"><img src="img/detailsquare.jpg" alt="..." class="img-fluid"></a></li>
-                <li class="list-inline-item"><a href="#"><img src="img/detailsquare2.jpg" alt="..." class="img-fluid"></a></li>
-                <li class="list-inline-item"><a href="#"><img src="img/detailsquare3.jpg" alt="..." class="img-fluid"></a></li>
-                <li class="list-inline-item"><a href="#"><img src="img/detailsquare3.jpg" alt="..." class="img-fluid"></a></li>
-                <li class="list-inline-item"><a href="#"><img src="img/detailsquare2.jpg" alt="..." class="img-fluid"></a></li>
-                <li class="list-inline-item"><a href="#"><img src="img/detailsquare.jpg" alt="..." class="img-fluid"></a></li>
+                <li class="list-inline-item"><a href="#"><img src="/img/detailsquare.jpg" alt="..." class="img-fluid"></a></li>
+                <li class="list-inline-item"><a href="#"><img src="/img/detailsquare2.jpg" alt="..." class="img-fluid"></a></li>
+                <li class="list-inline-item"><a href="#"><img src="/img/detailsquare3.jpg" alt="..." class="img-fluid"></a></li>
+                <li class="list-inline-item"><a href="#"><img src="/img/detailsquare3.jpg" alt="..." class="img-fluid"></a></li>
+                <li class="list-inline-item"><a href="#"><img src="/img/detailsquare2.jpg" alt="..." class="img-fluid"></a></li>
+                <li class="list-inline-item"><a href="#"><img src="/img/detailsquare.jpg" alt="..." class="img-fluid"></a></li>
               </ul>
             </div>
           </div>

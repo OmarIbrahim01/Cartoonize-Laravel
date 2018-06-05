@@ -12,22 +12,20 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        $category = Category::firstOrNew([
-            'slug' => 'category-1',
+        DB::table('categories')->insert([
+            'name' => 'Individual',
         ]);
-        if (!$category->exists) {
-            $category->fill([
-                'name' => 'Category 1',
-            ])->save();
-        }
 
-        $category = Category::firstOrNew([
-            'slug' => 'category-2',
+        DB::table('categories')->insert([
+            'name' => 'Couple',
         ]);
-        if (!$category->exists) {
-            $category->fill([
-                'name' => 'Category 2',
-            ])->save();
-        }
+
+        DB::table('categories')->insert([
+            'name' => 'Family',
+        ]);
+
+        DB::table('categories')->insert([
+            'name' => 'Group',
+        ]);
     }
 }

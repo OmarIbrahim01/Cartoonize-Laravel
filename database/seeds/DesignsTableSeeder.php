@@ -14,6 +14,8 @@ class DesignsTableSeeder extends Seeder
         DB::table('designs')->insert([
             'name' => 'design1',
             'description' => 'qweqweqwe',
+            'categroy_id' => '1',
+            'sub_category_id' => '1',
             'design_face_price_id' => '1',
             'tag' => 'tag',
             'image_path' => '/designs/design1'
@@ -22,6 +24,8 @@ class DesignsTableSeeder extends Seeder
         DB::table('designs')->insert([
             'name' => 'design2',
             'description' => 'qweqweqwe',
+            'categroy_id' => '1',
+            'sub_category_id' => '1',
             'design_face_price_id' => '2',
             'tag' => 'tag',
             'image_path' => '/designs/design2'
@@ -30,6 +34,8 @@ class DesignsTableSeeder extends Seeder
         DB::table('designs')->insert([
             'name' => 'design3',
             'description' => 'qweqweqwe',
+            'categroy_id' => '1',
+            'sub_category_id' => '1',
             'design_face_price_id' => '1',
             'tag' => 'tag',
             'image_path' => '/designs/design3'
@@ -38,6 +44,8 @@ class DesignsTableSeeder extends Seeder
         DB::table('designs')->insert([
             'name' => 'design4',
             'description' => 'qweqweqwe',
+            'categroy_id' => '1',
+            'sub_category_id' => '1',
             'design_face_price_id' => '3',
             'tag' => 'tag',
             'image_path' => '/designs/design4'
@@ -46,6 +54,8 @@ class DesignsTableSeeder extends Seeder
         DB::table('designs')->insert([
             'name' => 'design5',
             'description' => 'qweqweqwe',
+            'categroy_id' => '1',
+            'sub_category_id' => '1',
             'design_face_price_id' => '2',
             'tag' => 'tag',
             'image_path' => '/designs/design5'
@@ -54,6 +64,8 @@ class DesignsTableSeeder extends Seeder
         DB::table('designs')->insert([
             'name' => 'design6',
             'description' => 'qweqweqwe',
+            'categroy_id' => '1',
+            'sub_category_id' => '1',
             'design_face_price_id' => '2',
             'tag' => 'tag',
             'image_path' => '/designs/design6'
@@ -62,6 +74,8 @@ class DesignsTableSeeder extends Seeder
         DB::table('designs')->insert([
             'name' => 'design7',
             'description' => 'qweqweqwe',
+            'categroy_id' => '1',
+            'sub_category_id' => '1',
             'design_face_price_id' => '1',
             'tag' => 'tag',
             'image_path' => '/designs/design7'
@@ -70,6 +84,8 @@ class DesignsTableSeeder extends Seeder
         DB::table('designs')->insert([
             'name' => 'design8',
             'description' => 'qweqweqwe',
+            'categroy_id' => '1',
+            'sub_category_id' => '1',
             'design_face_price_id' => '1',
             'tag' => 'tag',
             'image_path' => '/designs/design8'

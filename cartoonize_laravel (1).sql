@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: May 31, 2018 at 12:28 PM
+-- Generation Time: Jun 05, 2018 at 01:07 PM
 -- Server version: 5.7.19
 -- PHP Version: 7.1.9
 
@@ -35,7 +35,17 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Individual', NULL, NULL),
+(2, 'Couple', NULL, NULL),
+(3, 'Family', NULL, NULL),
+(4, 'Group', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -188,86 +198,42 @@ CREATE TABLE IF NOT EXISTS `designs` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci,
-  `design_face_price_id` int(11) NOT NULL,
+  `min_faces` int(11) NOT NULL,
   `tag` text COLLATE utf8mb4_unicode_ci,
   `image_path` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `category_id` int(11) NOT NULL,
   `sub_category_id` int(11) NOT NULL,
+  `new` tinyint(1) NOT NULL DEFAULT '0',
+  `best_selling` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `designs`
 --
 
-INSERT INTO `designs` (`id`, `name`, `description`, `design_face_price_id`, `tag`, `image_path`, `category_id`, `sub_category_id`, `created_at`, `updated_at`) VALUES
-(1, 'design1', 'qweqweqwe', 1, 'tag', '/designs/design1', 1, 1, NULL, NULL),
-(2, 'design1', 'qweqweqwe', 2, 'tag', '/designs/design1', 1, 1, NULL, NULL),
-(3, 'design2', 'qweqweqwe', 1, 'tag', '/designs/design2', 1, 1, NULL, NULL),
-(4, 'design3', 'qweqweqwe', 1, 'tag', '/designs/design3', 1, 1, NULL, NULL),
-(5, 'design4', 'qweqweqwe', 2, 'tag', '/designs/design4', 1, 2, NULL, NULL),
-(6, 'design5', 'qweqweqwe', 3, 'tag', '/designs/design5', 1, 2, NULL, NULL),
-(7, 'design6', 'qweqweqwe', 1, 'tag', '/designs/design6', 1, 2, NULL, NULL),
-(8, 'design7', 'qweqweqwe', 1, 'tag', '/designs/design7', 1, 2, NULL, NULL),
-(9, 'design8', 'qweqweqwe', 1, 'tag', '/designs/design8', 1, 3, NULL, NULL),
-(10, 'design1', 'qweqweqwe', 1, 'tag', '/designs/design1', 1, 3, NULL, NULL),
-(11, 'design2', 'qweqweqwe', 2, 'tag', '/designs/design2', 1, 3, NULL, NULL),
-(12, 'design3', 'qweqweqwe', 2, 'tag', '/designs/design3', 2, 3, NULL, NULL),
-(13, 'design4', 'qweqweqwe', 2, 'tag', '/designs/design4', 2, 4, NULL, NULL),
-(14, 'design5', 'qweqweqwe', 2, 'tag', '/designs/design5', 2, 4, NULL, NULL),
-(15, 'design6', 'qweqweqwe', 3, 'tag', '/designs/design6', 2, 4, NULL, NULL),
-(16, 'design7', 'qweqweqwe', 3, 'tag', '/designs/design7', 2, 4, NULL, NULL),
-(17, 'design8', 'qweqweqwe', 1, 'tag', '/designs/design8', 2, 5, NULL, NULL),
-(18, 'design1', 'qweqweqwe', 1, 'tag', '/designs/design1', 2, 5, NULL, NULL),
-(19, 'design2', 'qweqweqwe', 1, 'tag', '/designs/design2', 2, 5, NULL, NULL),
-(20, 'design3', 'qweqweqwe', 1, 'tag', '/designs/design3', 2, 5, NULL, NULL),
-(21, 'design4', 'qweqweqwe', 1, 'tag', '/designs/design4', 2, 6, NULL, NULL),
-(22, 'design5', 'qweqweqwe', 1, 'tag', '/designs/design5', 2, 6, NULL, NULL),
-(23, 'design6', 'qweqweqwe', 1, 'tag', '/designs/design6', 2, 6, NULL, NULL),
-(24, 'design7', 'qweqweqwe', 1, 'tag', '/designs/design7', 2, 6, NULL, NULL),
-(25, 'design8', 'qweqweqwe', 1, 'tag', '/designs/design8', 2, 6, NULL, NULL),
-(26, 'design1', 'qweqweqwe', 0, 'tag', '/designs/design1', 0, 0, NULL, NULL),
-(27, 'design2', 'qweqweqwe', 0, 'tag', '/designs/design2', 0, 0, NULL, NULL),
-(28, 'design3', 'qweqweqwe', 0, 'tag', '/designs/design3', 0, 0, NULL, NULL),
-(29, 'design4', 'qweqweqwe', 0, 'tag', '/designs/design4', 0, 0, NULL, NULL),
-(30, 'design5', 'qweqweqwe', 0, 'tag', '/designs/design5', 0, 0, NULL, NULL),
-(31, 'design6', 'qweqweqwe', 0, 'tag', '/designs/design6', 0, 0, NULL, NULL),
-(32, 'design7', 'qweqweqwe', 0, 'tag', '/designs/design7', 0, 0, NULL, NULL),
-(33, 'design8', 'qweqweqwe', 0, 'tag', '/designs/design8', 0, 0, NULL, NULL),
-(34, 'design1', 'qweqweqwe', 0, 'tag', '/designs/design1', 0, 0, NULL, NULL),
-(35, 'design2', 'qweqweqwe', 0, 'tag', '/designs/design2', 0, 0, NULL, NULL),
-(36, 'design3', 'qweqweqwe', 0, 'tag', '/designs/design3', 0, 0, NULL, NULL),
-(37, 'design4', 'qweqweqwe', 0, 'tag', '/designs/design4', 0, 0, NULL, NULL),
-(38, 'design5', 'qweqweqwe', 0, 'tag', '/designs/design5', 0, 0, NULL, NULL),
-(39, 'design6', 'qweqweqwe', 0, 'tag', '/designs/design6', 0, 0, NULL, NULL),
-(40, 'design7', 'qweqweqwe', 0, 'tag', '/designs/design7', 0, 0, NULL, NULL),
-(41, 'design8', 'qweqweqwe', 0, 'tag', '/designs/design8', 0, 0, NULL, NULL),
-(42, 'design1', 'qweqweqwe', 1, 'tag', '/designs/design1', 0, 0, NULL, NULL),
-(43, 'design2', 'qweqweqwe', 2, 'tag', '/designs/design2', 0, 0, NULL, NULL),
-(44, 'design3', 'qweqweqwe', 1, 'tag', '/designs/design3', 0, 0, NULL, NULL),
-(45, 'design4', 'qweqweqwe', 3, 'tag', '/designs/design4', 0, 0, NULL, NULL),
-(46, 'design5', 'qweqweqwe', 2, 'tag', '/designs/design5', 0, 0, NULL, NULL),
-(47, 'design6', 'qweqweqwe', 2, 'tag', '/designs/design6', 0, 0, NULL, NULL),
-(48, 'design7', 'qweqweqwe', 1, 'tag', '/designs/design7', 0, 0, NULL, NULL),
-(49, 'design8', 'qweqweqwe', 1, 'tag', '/designs/design8', 0, 0, NULL, NULL),
-(50, 'design1', 'qweqweqwe', 1, 'tag', '/designs/design1', 0, 0, NULL, NULL),
-(51, 'design2', 'qweqweqwe', 2, 'tag', '/designs/design2', 0, 0, NULL, NULL),
-(52, 'design3', 'qweqweqwe', 1, 'tag', '/designs/design3', 0, 0, NULL, NULL),
-(53, 'design4', 'qweqweqwe', 3, 'tag', '/designs/design4', 0, 0, NULL, NULL),
-(54, 'design5', 'qweqweqwe', 2, 'tag', '/designs/design5', 0, 0, NULL, NULL),
-(55, 'design6', 'qweqweqwe', 2, 'tag', '/designs/design6', 0, 0, NULL, NULL),
-(56, 'design7', 'qweqweqwe', 1, 'tag', '/designs/design7', 0, 0, NULL, NULL),
-(57, 'design8', 'qweqweqwe', 1, 'tag', '/designs/design8', 0, 0, NULL, NULL),
-(58, 'design1', 'qweqweqwe', 1, 'tag', '/designs/design1', 0, 0, NULL, NULL),
-(59, 'design2', 'qweqweqwe', 2, 'tag', '/designs/design2', 0, 0, NULL, NULL),
-(60, 'design3', 'qweqweqwe', 1, 'tag', '/designs/design3', 0, 0, NULL, NULL),
-(61, 'design4', 'qweqweqwe', 3, 'tag', '/designs/design4', 0, 0, NULL, NULL),
-(62, 'design5', 'qweqweqwe', 2, 'tag', '/designs/design5', 0, 0, NULL, NULL),
-(63, 'design6', 'qweqweqwe', 2, 'tag', '/designs/design6', 0, 0, NULL, NULL),
-(64, 'design7', 'qweqweqwe', 1, 'tag', '/designs/design7', 0, 0, NULL, NULL),
-(65, 'design8', 'qweqweqwe', 1, 'tag', '/designs/design8', 0, 0, NULL, NULL);
+INSERT INTO `designs` (`id`, `name`, `description`, `min_faces`, `tag`, `image_path`, `category_id`, `sub_category_id`, `new`, `best_selling`, `created_at`, `updated_at`) VALUES
+(1, 'design1', 'qweqweqwe', 1, 'tag', '/storage/designs/design1.jpg', 1, 1, 0, 0, NULL, NULL),
+(3, 'design2', 'qweqweqwe', 2, 'tag', '/storage/designs/design2.jpg', 1, 1, 0, 0, NULL, NULL),
+(4, 'design3', 'qweqweqwe', 3, 'tag', '/storage/designs/design3.jpg', 1, 1, 0, 1, NULL, NULL),
+(5, 'design4', 'qweqweqwe', 3, 'tag', '/storage/designs/design4.jpg', 1, 2, 0, 0, NULL, NULL),
+(6, 'design5', 'qweqweqwe', 1, 'tag', '/storage/designs/design5.jpg', 1, 2, 1, 1, NULL, NULL),
+(7, 'design6', 'qweqweqwe', 1, 'tag', '/storage/designs/design6.jpg', 1, 2, 0, 0, NULL, NULL),
+(8, 'design7', 'qweqweqwe', 2, 'tag', '/storage/designs/design7.jpg', 1, 2, 1, 1, NULL, NULL),
+(9, 'design8', 'qweqweqwe', 2, 'tag', '/storage/designs/design8.jpg', 1, 3, 1, 1, NULL, NULL),
+(10, 'design9', 'qweqweqwe', 1, 'tag', '/storage/designs/design8.jpg', 1, 3, 0, 0, NULL, NULL),
+(11, 'design10', 'qweqweqwe', 1, 'tag', '/storage/designs/design1.jpg', 1, 3, 1, 0, NULL, NULL),
+(12, 'design11', 'qweqweqwe', 3, 'tag', '/storage/designs/design2.jpg', 2, 3, 0, 0, NULL, NULL),
+(13, 'design12', 'qweqweqwe', 2, 'tag', '/storage/designs/design3.jpg', 2, 4, 0, 0, NULL, NULL),
+(14, 'design13', 'qweqweqwe', 2, 'tag', '/storage/designs/design4.jpg', 2, 4, 1, 0, NULL, NULL),
+(15, 'design14', 'qweqweqwe', 3, 'tag', '/storage/designs/design5.jpg\r\n', 2, 4, 0, 1, NULL, NULL),
+(16, 'design15', 'qweqweqwe', 3, 'tag', '/storage/designs/design6.jpg\r\n', 2, 4, 0, 0, NULL, NULL),
+(17, 'design16', 'qweqweqwe', 1, 'tag', '/storage/designs/design7.jpg\r\n', 2, 5, 0, 0, NULL, NULL),
+(26, 'design18', 'qweqweqwe', 2, 'tag', '/storage/designs/design8.jpg\r\n', 0, 0, 0, 0, NULL, NULL),
+(27, 'design19', 'qweqweqwe', 2, 'tag', '/storage/designs/design5.jpg', 0, 0, 0, 0, NULL, NULL),
+(28, 'design20', 'qweqweqwe', 2, 'tag', '/storage/designs/design1.jpg', 0, 0, 1, 2, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -283,7 +249,14 @@ CREATE TABLE IF NOT EXISTS `design_face_prices` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+--
+-- Dumping data for table `design_face_prices`
+--
+
+INSERT INTO `design_face_prices` (`id`, `price`, `active`, `created_at`, `updated_at`) VALUES
+(1, 50, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -428,7 +401,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `orders`
@@ -535,7 +508,22 @@ INSERT INTO `orders` (`id`, `user_id`, `delivery_type_id`, `delivery_address`, `
 (99, 1, 2, NULL, NULL, '1', 1, 1, 1, NULL, NULL),
 (100, 1, 1, 'wwwwwwwwwwwwwwwwww', 1, NULL, 2, 2, 1, NULL, NULL),
 (101, 3, 1, 'eeeeeeeeeeeeeeeeee', 1, NULL, 3, 4, 1, NULL, NULL),
-(102, 1, 1, 'rrrrrrrrrrrrrrrrr', 1, '1', 1, 1, 1, NULL, NULL);
+(102, 1, 1, 'rrrrrrrrrrrrrrrrr', 1, '1', 1, 1, 1, NULL, NULL),
+(103, 1, 1, 'qqqqqqqqqqqqqqqqk', 1, NULL, 1, 1, 1, NULL, NULL),
+(104, 1, 2, NULL, NULL, '1', 1, 1, 1, NULL, NULL),
+(105, 1, 1, 'wwwwwwwwwwwwwwwwww', 1, NULL, 2, 2, 1, NULL, NULL),
+(106, 3, 1, 'eeeeeeeeeeeeeeeeee', 1, NULL, 3, 4, 1, NULL, NULL),
+(107, 1, 1, 'rrrrrrrrrrrrrrrrr', 1, '1', 1, 1, 1, NULL, NULL),
+(108, 1, 1, 'qqqqqqqqqqqqqqqqk', 1, NULL, 1, 1, 1, NULL, NULL),
+(109, 1, 2, NULL, NULL, '1', 1, 1, 1, NULL, NULL),
+(110, 1, 1, 'wwwwwwwwwwwwwwwwww', 1, NULL, 2, 2, 1, NULL, NULL),
+(111, 3, 1, 'eeeeeeeeeeeeeeeeee', 1, NULL, 3, 4, 1, NULL, NULL),
+(112, 1, 1, 'rrrrrrrrrrrrrrrrr', 1, '1', 1, 1, 1, NULL, NULL),
+(113, 1, 1, 'qqqqqqqqqqqqqqqqk', 1, NULL, 1, 1, 1, NULL, NULL),
+(114, 1, 2, NULL, NULL, '1', 1, 1, 1, NULL, NULL),
+(115, 1, 1, 'wwwwwwwwwwwwwwwwww', 1, NULL, 2, 2, 1, NULL, NULL),
+(116, 3, 1, 'eeeeeeeeeeeeeeeeee', 1, NULL, 3, 4, 1, NULL, NULL),
+(117, 1, 1, 'rrrrrrrrrrrrrrrrr', 1, '1', 1, 1, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -565,6 +553,7 @@ CREATE TABLE IF NOT EXISTS `order_items` (
   `order_id` int(11) NOT NULL,
   `design_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -838,7 +827,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `products`
@@ -848,11 +837,7 @@ INSERT INTO `products` (`id`, `name`, `description`, `dimensions`, `price`, `cre
 (1, 'A4 Maqautte', 'ttttttttttttttt', '30x40', 400, NULL, NULL),
 (2, 'A3 Maqautte', 'qqqqqqqqqq', '40x40', 600, NULL, NULL),
 (3, 'A2 Maqautte', 'ttttttttttttttt', '30x40', 800, NULL, NULL),
-(4, 'A0 Maqautte', 'ttttttttttttttt', '30x40', 1000, NULL, NULL),
-(5, 'A4 Maqautte', 'ttttttttttttttt', '30x40', 400, NULL, NULL),
-(6, 'A3 Maqautte', 'qqqqqqqqqq', '40x40', 600, NULL, NULL),
-(7, 'A2 Maqautte', 'ttttttttttttttt', '30x40', 800, NULL, NULL),
-(8, 'A0 Maqautte', 'ttttttttttttttt', '30x40', 1000, NULL, NULL);
+(4, 'A0 Maqautte', 'ttttttttttttttt', '30x40', 1000, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -929,7 +914,7 @@ CREATE TABLE IF NOT EXISTS `stores` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `stores`
@@ -945,7 +930,11 @@ INSERT INTO `stores` (`id`, `name`, `address`, `created_at`, `updated_at`) VALUE
 (7, 'Citystars', 'ttttttttttttttt', NULL, NULL),
 (8, 'Rehab Mall 2', 'ttttttttttttttt', NULL, NULL),
 (9, 'Citystars', 'ttttttttttttttt', NULL, NULL),
-(10, 'Rehab Mall 2', 'ttttttttttttttt', NULL, NULL);
+(10, 'Rehab Mall 2', 'ttttttttttttttt', NULL, NULL),
+(11, 'Citystars', 'ttttttttttttttt', NULL, NULL),
+(12, 'Rehab Mall 2', 'ttttttttttttttt', NULL, NULL),
+(13, 'Citystars', 'ttttttttttttttt', NULL, NULL),
+(14, 'Rehab Mall 2', 'ttttttttttttttt', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -961,7 +950,32 @@ CREATE TABLE IF NOT EXISTS `sub_categories` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+--
+-- Dumping data for table `sub_categories`
+--
+
+INSERT INTO `sub_categories` (`id`, `name`, `category_id`, `created_at`, `updated_at`) VALUES
+(1, 'Baseball', 1, NULL, NULL),
+(2, 'Basketball', 1, NULL, NULL),
+(3, 'Birthday', 1, NULL, NULL),
+(4, 'Boss', 1, NULL, NULL),
+(5, 'Christmas & New Year', 1, NULL, NULL),
+(6, 'Coach', 1, NULL, NULL),
+(7, 'Football', 1, NULL, NULL),
+(8, 'For Her', 1, NULL, NULL),
+(9, 'For Him', 1, NULL, NULL),
+(10, 'Anniversary', 2, NULL, NULL),
+(11, 'Colleagues', 2, NULL, NULL),
+(12, 'Family Relatives', 2, NULL, NULL),
+(13, 'Friends', 2, NULL, NULL),
+(14, 'Movie Characters', 2, NULL, NULL),
+(15, 'Romantic & Love', 2, NULL, NULL),
+(16, 'Friends', 2, NULL, NULL),
+(17, 'Family 1', 3, NULL, NULL),
+(18, 'Family 2', 3, NULL, NULL),
+(19, 'Family 3', 3, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1036,7 +1050,7 @@ CREATE TABLE IF NOT EXISTS `urgents` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `urgents`
@@ -1054,7 +1068,13 @@ INSERT INTO `urgents` (`id`, `name`, `description`, `days`, `price`, `active`, `
 (9, '1-2 Days', 'This will take up to 5 bussness days', 2, 100, 1, NULL, NULL),
 (10, '4-5 Days', 'This will take up to 5 bussness days', 5, 0, 1, NULL, NULL),
 (11, '2-3 Days', 'This will take up to 5 bussness days', 3, 50, 1, NULL, NULL),
-(12, '1-2 Days', 'This will take up to 5 bussness days', 2, 100, 1, NULL, NULL);
+(12, '1-2 Days', 'This will take up to 5 bussness days', 2, 100, 1, NULL, NULL),
+(13, '4-5 Days', 'This will take up to 5 bussness days', 5, 0, 1, NULL, NULL),
+(14, '2-3 Days', 'This will take up to 5 bussness days', 3, 50, 1, NULL, NULL),
+(15, '1-2 Days', 'This will take up to 5 bussness days', 2, 100, 1, NULL, NULL),
+(16, '4-5 Days', 'This will take up to 5 bussness days', 5, 0, 1, NULL, NULL),
+(17, '2-3 Days', 'This will take up to 5 bussness days', 3, 50, 1, NULL, NULL),
+(18, '1-2 Days', 'This will take up to 5 bussness days', 2, 100, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
