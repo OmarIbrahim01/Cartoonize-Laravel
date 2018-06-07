@@ -30,6 +30,9 @@ Route::get('/contact_us', [
 ]);
 
 
+
+// Designs Shop Routes
+
 Route::get('/designs', [
     'as' => 'designs.index',
     'uses' => 'DesignsController@index'
@@ -48,6 +51,13 @@ Route::get('/category/{category_id}/{sub_category_id}', [
 Route::get('/designs/{id}', [
     'as' => 'designs.show',
     'uses' => 'DesignsController@show'
+]);
+
+
+//Cart Routes
+Route::get('/shopping_cart', [
+    'as' => 'shopping_cart.show',
+    'uses' => 'CartController@show'
 ]);
 
 

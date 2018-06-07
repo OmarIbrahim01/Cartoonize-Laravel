@@ -56,27 +56,29 @@
                   <option value="{{$product->id}}">{{$product->name}} <span style="color: green;">({{$product->dimensions}} cm) ... </span> <span style="color: red;">{{$product->price}} LE</span></option>
                   @endforeach
                 </select>
+
+                <h4 style="margin-top: 30px;">Quantity</h4>
+                <div class="form-group">
+                  <textarea class="form-control" rows="1" placeholder="1" required></textarea>
+                </div>
              
                 <h4 style="margin-top: 30px;">How Many People in The Design</h4>
                 <select class="form-control">
-                  @for($count=1; $count <= 10; $count++)
-                  <option value="">{{$count}} ... <span style="color: red;">+{{($count-1)*$face_price->price}} LE</span></option>
+                  @for($count=1; $count <= 25; $count++)
+                  <option value="">{{$count}} People ... <span style="color: red;">+{{($count-1)*$face_price->price}} LE</span></option>
                   @endfor
                 </select>
                 
                 <h4 style="margin-top: 30px;">Comment</h4>
                 <div class="form-group">
-                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" placeholder="Tell us any modification you like to make"></textarea>
+                  <textarea class="form-control" rows="4" placeholder="Tell us any modification you like to make"></textarea>
                 </div>
 
-                <h4 style="margin-top: 30px;">Quantity</h4>
-                <div class="form-group">
-                  <input type="text" class="form-control">
-                </div>
+                
                 
                 <p class="text-center" style="margin-top: 50px;">
                   <button type="submit" class="btn btn-template-outlined"><i class="fa fa-shopping-cart"></i> Add to cart</button>
-                  <button type="submit" data-toggle="tooltip" data-placement="top" title="Add to wishlist" class="btn btn-template-outlined"><i class="fa fa-heart-o"></i></button>
+                  <button type="submit" onclick="window.location.href='#'" data-toggle="tooltip" data-placement="top" title="Add to wishlist" class="btn btn-template-outlined"><i class="fa fa-heart-o"></i></button>
                 </p>
               </form>
             </div>

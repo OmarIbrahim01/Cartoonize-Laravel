@@ -10,7 +10,7 @@
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
     <!-- Font Awesome CSS-->
-    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <!-- Google fonts - Roboto-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,700">
     <!-- Bootstrap Select-->
@@ -72,6 +72,14 @@
                   </ul>
                 </li>
                 
+                
+
+                <!-- ========== Login and Signup ==================-->
+
+                @auth
+
+                <li class="nav-item dropdown"><a href="/" class="dropdown">Shopping Cart</a></li>
+
                 <!-- ========== Contact dropdown ==================-->
                 <li class="nav-item dropdown"><a href="javascript: void(0)" data-toggle="dropdown" class="dropdown-toggle">About <b class="caret"></b></a>
                   <ul class="dropdown-menu">
@@ -81,8 +89,33 @@
                 </li>
                 <!-- ========== Contact dropdown end ==================-->
 
-                <!-- ========== Login and Signup ==================-->
-                <li class="nav-item dropdown"><a href="#">Sign Up</a></li>
+                <!-- ========== User dropdown ==================-->
+                <li class="nav-item dropdown"><a href="javascript: void(0)" data-toggle="dropdown" class="dropdown-toggle">{{Auth::user()->name}} <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li class="dropdown-item"><a href="#" class="nav-link">My Orders</a></li>
+                    
+
+                    <li class="dropdown-item"><a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                      {{ csrf_field() }}
+                    </form>
+
+                  </ul>
+                </li>
+                <!-- ========== User dropdown end ==================-->
+
+                @else
+
+                <!-- ========== Contact dropdown ==================-->
+                <li class="nav-item dropdown"><a href="javascript: void(0)" data-toggle="dropdown" class="dropdown-toggle">About <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li class="dropdown-item"><a href="/who_we_are" class="nav-link">Who Are We?</a></li>
+                    <li class="dropdown-item"><a href="/contact_us" class="nav-link">Contact Us</a></li>
+                  </ul>
+                </li>
+                <!-- ========== Contact dropdown end ==================-->
+
+                <li class="nav-item dropdown"><a href="{{ route('register') }}">Sign Up</a></li>
                 <li class="nav-item dropdown"><a href="#" data-toggle="modal" data-target="#login-modal" class="login-btn">Login</a></li>
 
                 <!-- Login Modal-->
@@ -94,12 +127,13 @@
                         <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
                       </div>
                       <div class="modal-body">
-                        <form action="customer-orders.html" method="post">
+                        <form method="POST" action="{{ route('login') }}">
+                          {{ csrf_field() }}
                           <div class="form-group">
-                            <input id="email_modal" type="text" placeholder="email" class="form-control">
+                            <input id="email_modal" type="email" placeholder="email" name="email" class="form-control" value="{{ old('email') }}" required autofocus>
                           </div>
                           <div class="form-group">
-                            <input id="password_modal" type="password" placeholder="password" class="form-control">
+                            <input id="password_modal" type="password" placeholder="password" class="form-control" name="password" required>
                           </div>
                           <p class="text-center">
                             <button class="btn btn-template-outlined"><i class="fa fa-sign-in"></i> Log in</button>
@@ -112,6 +146,10 @@
                   </div>
                 </div>
                 <!-- Login modal end-->
+
+                @endauth
+
+
 
                 <!-- ========== Login and Signup end ==================-->
                
