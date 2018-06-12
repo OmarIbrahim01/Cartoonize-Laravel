@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Urgent;
-use App\DeliveryType;
-use App\Store;
-use App\OrderDeliveryArea;
+use App\Order;
+use App\OrderDesign;
 
-class CartController extends Controller
+class OrderDesignsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -38,7 +36,26 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(Auth::user()->hasActiveCart()){
+            $cart = Auth::user()->activeCart();
+        }elseif(!Auth::user()->hasActiveCart()){
+            $cart = new Order;
+            $cart->user_id = Auth::id();
+            $cart->delivery_type_id = null;
+            $cart->delivery_address = null;
+            $cart->delivery_area_id = null;
+            $cart->store_id = null;
+            $cart->urgent_id = null;
+            $cart->order_progress_id = 1;
+            $cart->active = true;
+            $cart->save();
+        }
+
+        $order_design = new OrderDesign;
+        $order_design->order_id = $cart->id;
+        $order_design->design_id = $request->design;
+        $order_design->note = $request->comment;
+        $order_design->save();
     }
 
     /**
@@ -47,27 +64,9 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        $urgents = Urgent::all();
-        $delivery_types = DeliveryType::all();
-        $stores = Store::all();
-        $delievery_areas = OrderDeliveryArea::all();
-        return view('cart.show', ['urgents' => $urgents, 'delivery_types' => $delivery_types, 'delivery_areas' => $delievery_areas]);
-    }
-
-    public function preferences()
-    {
-        $urgents = Urgent::all();
-        $delivery_types = DeliveryType::all();
-        $stores = Store::all();
-        $delievery_areas = OrderDeliveryArea::all();
-        return view('cart.preferences', ['urgents' => $urgents, 'delivery_types' => $delivery_types, 'delivery_areas' => $delievery_areas, 'stores' => $stores]);
-    }
-
-    public function review()
-    {
-        return view('cart.review');
+        //
     }
 
     /**

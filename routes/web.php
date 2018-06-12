@@ -60,6 +60,29 @@ Route::get('/shopping_cart', [
     'uses' => 'CartController@show'
 ]);
 
+Route::get('/order_preferences', [
+    'as' => 'shopping_cart.preferences',
+    'uses' => 'CartController@preferences'
+]);
+
+Route::get('/order_review', [
+    'as' => 'shopping_cart.review',
+    'uses' => 'CartController@review'
+]);
+
+
+
+///////////////////////////////////
+///////Add To Cart Routes/////////
+/////////////////////////////////
+
+Route::get('/add_design_to_cart/{design_id}', [
+    'as' => 'addToCart.design',
+    'uses' => 'OrderDesignstController@store'
+]);
+
+
+
 
 
 

@@ -44,14 +44,18 @@
               </div>
           </div>
           <div class="col-sm-6">
-            <h3>{{$design->name}}</h3>
-            <h5 style="color: #444">Code: {{$design->id}}</h5>
+
+            <div style="margin-left: 18px;">
+              <h3>{{$design->name}}</h3>
+              <h5 style="color: #444">Code: {{$design->id}}</h5>
+            </div>
+
             <div class="box">
 
-              <form>
-                
+              <form action="{{route('addToCart.design')}}" method="POST" enctype="multipart/form-data">
+                {{csrf_field()}}
                 <h4>Available sizes</h4>
-                <select class="form-control">
+                <select name="size" class="form-control">
                   @foreach($products as $product)
                   <option value="{{$product->id}}">{{$product->name}} <span style="color: green;">({{$product->dimensions}} cm) ... </span> <span style="color: red;">{{$product->price}} LE</span></option>
                   @endforeach
@@ -59,26 +63,31 @@
 
                 <h4 style="margin-top: 30px;">Quantity</h4>
                 <div class="form-group">
-                  <textarea class="form-control" rows="1" placeholder="1" required></textarea>
+                  <input type="number" name="quantity" class="form-control" placeholder="1" required style="display: block;">
                 </div>
              
                 <h4 style="margin-top: 30px;">How Many People in The Design</h4>
                 <select class="form-control">
                   @for($count=1; $count <= 25; $count++)
-                  <option value="">{{$count}} People ... <span style="color: red;">+{{($count-1)*$face_price->price}} LE</span></option>
+                  <option value="{{$count}}" name="faces">{{$count}} People ... <span style="color: red;">+{{($count-1)*$face_price->price}} LE</span></option>
                   @endfor
                 </select>
+
+                <h4 style="margin-top: 30px;">Upload Your Photos<h4>
+                <div class="form-group">
+                  <input type="file" name="image[]" class="form-control-file btn-primary" id="file" multiple style="display: block;">
+                </div>
                 
                 <h4 style="margin-top: 30px;">Comment</h4>
                 <div class="form-group">
-                  <textarea class="form-control" rows="4" placeholder="Tell us any modification you like to make"></textarea>
+                  <textarea name="comment" class="form-control" rows="4" placeholder="Tell us any modification you like to make"></textarea>
                 </div>
 
                 
                 
                 <p class="text-center" style="margin-top: 50px;">
                   <button type="submit" class="btn btn-template-outlined"><i class="fa fa-shopping-cart"></i> Add to cart</button>
-                  <button type="submit" onclick="window.location.href='#'" data-toggle="tooltip" data-placement="top" title="Add to wishlist" class="btn btn-template-outlined"><i class="fa fa-heart-o"></i></button>
+                  <button type="submit" onclick="window.location.href='#'" data-toggle="tooltip" data-placement="top" title="Add to wishlist" class="btn btn-template-outlined"><i class="fa fa-heart"></i></button>
                 </p>
               </form>
             </div>

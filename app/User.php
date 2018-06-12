@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Auth;
+use App\Order;
 
 class User extends \TCG\Voyager\Models\User
 {
@@ -26,4 +28,30 @@ class User extends \TCG\Voyager\Models\User
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    public function hasActiveCart()
+    {
+        $user_id = Auth::id();
+        $cart = Order::where('user_id', $user_id)->where('active', true)->first();
+
+        if(empty($cart)){
+            return false;
+        }elseif(!empty($cart)){
+            return true;
+        }
+
+    }
+
+    public function activeCart()
+    {
+        $user_id = Auth::id();
+        $cart = Order::where('user_id', $user_id)->where('active', true)->first();
+        if(empty($cart)){
+            return false;
+        }elseif(!empty($cart)){
+            return $cart;
+        }
+    }
+
 }

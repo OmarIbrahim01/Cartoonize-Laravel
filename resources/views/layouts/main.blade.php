@@ -78,7 +78,7 @@
 
                 @auth
 
-                <li class="nav-item dropdown"><a href="/" class="dropdown">Shopping Cart</a></li>
+                <li class="nav-item dropdown"><a href="{{route('shopping_cart.show')}}" class="dropdown">Shopping Cart</a></li>
 
                 <!-- ========== Contact dropdown ==================-->
                 <li class="nav-item dropdown"><a href="javascript: void(0)" data-toggle="dropdown" class="dropdown-toggle">About <b class="caret"></b></a>
