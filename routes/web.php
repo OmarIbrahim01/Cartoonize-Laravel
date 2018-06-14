@@ -76,10 +76,21 @@ Route::get('/order_review', [
 ///////Add To Cart Routes/////////
 /////////////////////////////////
 
-Route::get('/add_design_to_cart/{design_id}', [
+Route::post('/add_design_to_cart/{design_id}', [
     'as' => 'addToCart.design',
-    'uses' => 'OrderDesignstController@store'
+    'uses' => 'OrderDesignsController@store'
 ]);
+
+Route::post('/add_product_to_cart/{design_id}', [
+    'as' => 'addToCart.product',
+    'uses' => 'CartController@add_product_to_cart'
+]);
+
+Route::post('/delete_user_image', [
+    'as' => 'addToCart.deleteUserImage',
+    'uses' => 'CartController@delete_user_image'
+]);
+
 
 
 

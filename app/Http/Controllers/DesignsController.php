@@ -8,6 +8,8 @@ use App\Category;
 use App\SubCategory;
 use App\Product;
 use App\DesignFacePrice;
+use Auth;
+
 
 class DesignsController extends Controller
 {

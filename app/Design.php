@@ -15,4 +15,9 @@ class Design extends Model
     {
     	return $this->belongsTo('App\SubCategory');
     }
+
+    public function order_designs()
+    {
+    	return $this->hasMany('App\OrderDesign');
+    }
 }

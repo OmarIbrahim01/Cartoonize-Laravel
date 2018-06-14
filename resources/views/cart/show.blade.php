@@ -21,6 +21,7 @@
 
 
 @section('content')
+@if(!empty($cart))
 <div id="content">
   <div class="container">
     <div class="row">
@@ -47,13 +48,14 @@
                     <hr>
                   </div>
                   
-
+                  
+                  @foreach($order_designs as $order_design)
                   {{-- ////////////////////////////// --}}
                   <div class="row" style="width: 100%; border-bottom: 1.3px solid; margin-bottom: 50px; border-color: #ddd;">       
                     <div class="col-md-4">
-                      <a href=""><img src="/storage/designs/design1.jpg" style="max-width: 250px;" class="text-center"></a>
-                      <h4 class="text-center">Design Name</h4>
-                      <h5 class="text-center">ID: 2547</h5>
+                      <a href="{{$order_design->design->image_path}}"><img src="{{$order_design->design->image_path}}" style="max-width: 250px;" class="text-center"></a>
+                      <h4 class="text-center">{{$order_design->design->name}}</h4>
+                      <h5 class="text-center">Code: {{$order_design->design->id}}</h5>
                     </div>
                     <div class="col-md-8" style="margin-bottom: 50px;">
                       <h3>Sizes</h3>
@@ -68,11 +70,12 @@
                           </tr>
                         </thead>
                         <tbody>
+                          @foreach($order_design->order_design_products as $order_design_product)
                           <tr>
-                            <td>qweqweqwe</td>
-                            <td>12.00</td>
-                            <td>2</td>
-                            <td>12.00</td>
+                            <td>{{$order_design_product->product->name}}</td>
+                            <td>{{$order_design_product->product->price}}</td>
+                            <td>{{$order_design_product->quantity}}</td>
+                            <td>{{$order_design_product->product->price*$order_design_product->quantity}}</td>
                             <td>
                               <a href="#" onclick="event.preventDefault(); document.getElementById('cancel_item').submit();"><i class="fas fa-times-circle" style="color: darkred; font-size: 20px;"></i></a>
                               <form id="cancel_item" action="/item/1" method="POST" style="display: none;">
@@ -81,6 +84,7 @@
                               </form>         
                             </td>
                           </tr>
+                          @endforeach
                         </tbody>
                       </table>
                        <!-- Button trigger Add Size Modal -->
@@ -98,48 +102,46 @@
                             <div class="modal-body">
                               <div class="row">
                                 <div class="col-md-9">
+                                  <form action="{{route('addToCart.product', [$order_design->id])}}" method="POST">
+                                    {{csrf_field()}}
                                   <div class="form-group">
                                     <label for="exampleFormControlSelect1">Select Size</label>
-                                    <select class="form-control" id="exampleFormControlSelect1">
-                                      <option>1</option>
-                                      <option>2</option>
-                                      <option>3</option>
-                                      <option>4</option>
-                                      <option>5</option>
+                                    <select class="form-control" name="product">
+                                      @foreach($products as $product)
+                                      <option value="{{$product->id}}">{{$product->name}}</option>
+                                      @endforeach
                                     </select>
                                   </div>
                                 </div>
                                 <div class="col-md-3">
                                   <div class="form-group">
                                     <label for="exampleFormControlInput1">Quantity</label>
-                                    <input type="number" class="form-control" value="1">
+                                    <input type="number" name="quantity" class="form-control" value="1">
                                   </div>
                                 </div>
                               </div>
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              <button type="button" class="btn btn-primary">Save changes</button>
+                              <button type="submit" class="btn btn-primary">Add Size</button>
                             </div>
+                            </form>
                           </div>
                         </div>
                       </div>
                       <!--End Modal -->
                       <hr>
+
                       <h3>User Images</h3>
                       <div class="row">
+
+                        @foreach($order_design->user_images as $user_image)
                         <div class="col-md-3">
-                          <a href=""><img src="/storage/designs/design1.jpg" style="max-width: 100px;"></a>
+                          <a href=""><img src="{{$user_image->full_path}}" style="max-width: 100px;"></a>
                           <a href="#" style="color: darkred; margin-top: 20px;"><i class="fas fa-times-circle" style="color: darkred; font-size: 20px; margin: auto;"></i> Remove</a>
                         </div>
-                        <div class="col-md-3">
-                          <a href=""><img src="/storage/designs/design1.jpg" style="max-width: 100px;"></a>
-                          <a href="#" style="color: darkred; margin-top: 20px;"><i class="fas fa-times-circle" style="color: darkred; font-size: 20px; margin: auto;"></i> Remove</a>
-                        </div>
-                        <div class="col-md-3">
-                          <a href=""><img src="/storage/designs/design1.jpg" style="max-width: 100px;"></a>
-                          <a href="#" style="color: darkred; margin-top: 20px;"><i class="fas fa-times-circle" style="color: darkred; font-size: 20px; margin: auto;"></i> Remove</a>
-                        </div>
+                        @endforeach
+                        
 
                       </div>
 
@@ -179,6 +181,8 @@
                     </div>
                   </div>
                   {{-- ///////////////////////// --}}
+                  @endforeach
+                  
                 </div>
                 <!-- /.row -->
                 
@@ -189,7 +193,7 @@
             <div class="box-footer d-flex flex-wrap align-items-center justify-content-between">
               <div class="left-col"><a href="{{route('designs.index')}}" class="btn btn-secondary mt-0"><i class="fa fa-chevron-left"></i>Back to Shopping</a></div>
               <div class="right-col">
-                <button type="submit" class="btn btn-template-main">Place the order<i class="fa fa-chevron-right"></i></button>
+                <button type="submit" class="btn btn-template-main">Choose Delivery Options<i class="fa fa-chevron-right"></i></button>
               </div>
             </div>
           </form>
@@ -229,6 +233,19 @@
   </div>
 </div>
 
+@else
+<div class="container">
+  <div class="row">       
+    <div class="col-md-12" style="margin-bottom: 30px;">
+      <h1 class="my-4"><i class="fas fa-shopping-cart"></i> My Shopping Cart</h1>
+      <hr>
+      <h2 style="text-align: center; margin: 150px auto">It Appears You Haven't Added Any Thing To Your Shopping Cart Yet.</h2>
+      <a href="/" class="btn btn-success" style=""><i class="fa fa-shopping-cart"></i> Browse Products</a>
+    </div>
+  </div>
+  <!-- /.row -->
+</div>
+@endif
 {{-- @else
 <h2 style="color: grey">Your Shopping Cart Is Empty Please Add Items To Your Shopping Cart</h2>
 <a href="/" class="btn btn-success" style="margin: 20px auto; margin-bottom: 620px;"><i class="fa fa-shopping-cart"></i> Browse Products</a>

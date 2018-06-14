@@ -5,9 +5,24 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Order;
 use App\OrderDesign;
+use App\OrderDesignProduct;
+use App\OrderDesignUserImage;
+
+
+use Illuminate\Support\Facades\Storage;
+use Validator, Input, Redirect; 
+use App\Http\Requests\UploadRequest;
+
+use Auth;
 
 class OrderDesignsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -34,7 +49,7 @@ class OrderDesignsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $design_id)
     {
         if(Auth::user()->hasActiveCart()){
             $cart = Auth::user()->activeCart();
@@ -51,11 +66,40 @@ class OrderDesignsController extends Controller
             $cart->save();
         }
 
+        //Add Design To OrderDesigns
         $order_design = new OrderDesign;
         $order_design->order_id = $cart->id;
-        $order_design->design_id = $request->design;
+        $order_design->design_id = $design_id;
+        $order_design->faces = $request->faces;
         $order_design->note = $request->comment;
         $order_design->save();
+
+        //Add Sizes To OrderDesignProducts
+        $size = new OrderDesignProduct;
+        $size->order_design_id = $order_design->id;
+        $size->product_id = $request->size;
+        $size->quantity = $request->quantity;
+        $size->save();
+
+        //Upload Images And Add to OrderDesignsUserImages
+        foreach($request->file('user_image') as $image){
+            $image_name = date("d-m-Y")
+                        .'_'
+                        .$image->getClientOriginalName();
+
+            $image_location = Storage::url('public/orders/'.$cart->id.'/'.$image_name);
+
+            Storage::putFileAs('public/orders/'.$cart->id, $image, $image_name);
+
+            $image = new OrderDesignUserImage;
+            $image->order_design_id = $order_design->id;
+            $image->name = $image_name;
+            $image->full_path = $image_location;
+            $image->save();
+
+        }
+
+        return redirect()->route('shopping_cart.show');
     }
 
     /**

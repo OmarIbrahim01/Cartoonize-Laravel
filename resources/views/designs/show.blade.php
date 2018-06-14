@@ -52,8 +52,9 @@
 
             <div class="box">
 
-              <form action="{{route('addToCart.design')}}" method="POST" enctype="multipart/form-data">
+              <form action="{{route('addToCart.design', [$design->id])}}" method="POST" enctype="multipart/form-data">
                 {{csrf_field()}}
+                <input type="hidden" name="design" value="{{$design->id}}">
                 <h4>Available sizes</h4>
                 <select name="size" class="form-control">
                   @foreach($products as $product)
@@ -75,7 +76,7 @@
 
                 <h4 style="margin-top: 30px;">Upload Your Photos<h4>
                 <div class="form-group">
-                  <input type="file" name="image[]" class="form-control-file btn-primary" id="file" multiple style="display: block;">
+                  <input type="file" name="user_image[]" class="form-control-file btn-primary" id="file" multiple style="display: block;">
                 </div>
                 
                 <h4 style="margin-top: 30px;">Comment</h4>
