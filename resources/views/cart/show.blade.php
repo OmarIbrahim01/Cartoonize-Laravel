@@ -27,14 +27,14 @@
     <div class="row">
       <div id="checkout" class="col-lg-9">
         <div class="box">
-          <form method="post" action="shop-checkout4.html">
-            <form method="post" action="shop-checkout4.html">
+          <form method="POST" id="submit_first" name="submit_first" action="{{route('SubmitCart.first')}}">
+        
               <ul class="nav nav-pills nav-fill">
                 <li class="nav-item"><a href="{{route('shopping_cart.show')}}" class="nav-link active"> <i class="fa fa-map-marker"></i><br>My Order</a></li>
                 <li class="nav-item"><a href="{{route('shopping_cart.preferences')}}" class="nav-link"><i class="fa fa-truck"></i><br>Delivery Options</a></li>
                 <li class="nav-item"><a href="{{route('shopping_cart.review')}}" class="nav-link"><i class="fa fa-eye"></i><br>Order Review</a></li>
               </ul>
-            </form>
+         
             <div class="content">
 
 
@@ -51,6 +51,7 @@
                   
                   @foreach($order_designs as $order_design)
                   {{-- ////////////////////////////// --}}
+                  <input type="hidden" name="order_design_id[]" multiple value="{{$order_design->id}}">
                   <div class="row" style="width: 100%; border-bottom: 1.3px solid; margin-bottom: 50px; border-color: #ddd;">       
                     <div class="col-md-4">
                       <a href="{{$order_design->design->image_path}}"><img src="{{$order_design->design->image_path}}" style="max-width: 250px;" class="text-center"></a>
@@ -78,7 +79,7 @@
                             <td>{{$order_design_product->product->price*$order_design_product->quantity}}</td>
                             <td>
                               <a href="#" onclick="event.preventDefault(); document.getElementById('cancel_item').submit();"><i class="fas fa-times-circle" style="color: darkred; font-size: 20px;"></i></a>
-                              <form id="cancel_item" action="/item/1" method="POST" style="display: none;">
+                              <form id="cancel_item" action="{{route('shopping_cart.delete_design_product', [$order_design_product->id])}}" method="POST" style="display: none;">
                                   {{ csrf_field() }}
                                   {{ method_field('DELETE') }}
                               </form>         
@@ -104,27 +105,27 @@
                                 <div class="col-md-9">
                                   <form action="{{route('addToCart.product', [$order_design->id])}}" method="POST">
                                     {{csrf_field()}}
-                                  <div class="form-group">
-                                    <label for="exampleFormControlSelect1">Select Size</label>
-                                    <select class="form-control" name="product">
-                                      @foreach($products as $product)
-                                      <option value="{{$product->id}}">{{$product->name}}</option>
-                                      @endforeach
-                                    </select>
+                                    <div class="form-group">
+                                      <label for="exampleFormControlSelect1">Select Size</label>
+                                      <select class="form-control" name="product">
+                                        @foreach($products as $product)
+                                        <option value="{{$product->id}}">{{$product->name}}</option>
+                                        @endforeach
+                                      </select>
+                                    </div>
                                   </div>
-                                </div>
-                                <div class="col-md-3">
-                                  <div class="form-group">
-                                    <label for="exampleFormControlInput1">Quantity</label>
-                                    <input type="number" name="quantity" class="form-control" value="1">
+                                  <div class="col-md-3">
+                                    <div class="form-group">
+                                      <label for="exampleFormControlInput1">Quantity</label>
+                                      <input type="number" name="quantity" class="form-control" value="1">
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              <button type="submit" class="btn btn-primary">Add Size</button>
-                            </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Add Size</button>
+                              </div>
                             </form>
                           </div>
                         </div>
@@ -137,10 +138,20 @@
 
                         @foreach($order_design->user_images as $user_image)
                         <div class="col-md-3">
-                          <a href=""><img src="{{$user_image->full_path}}" style="max-width: 100px;"></a>
-                          <a href="#" style="color: darkred; margin-top: 20px;"><i class="fas fa-times-circle" style="color: darkred; font-size: 20px; margin: auto;"></i> Remove</a>
+                          <a href="{{$user_image->full_path}}"><img src="{{$user_image->full_path}}" style="max-width: 100px;"></a>
+
+                          <a href="#" onclick="event.preventDefault(); document.getElementById('delete_image').submit();"><i class="fas fa-times-circle" style="color: darkred; font-size: 20px; margin: auto;"></i> Remove</a>
+                          
+                          
                         </div>
+                        @if(!empty($user_image))
+                          <form id="delete_image" action="{{route('addToCart.deleteUserImage', [$user_image->id])}}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+                          </form>  
+                        @endif
                         @endforeach
+
                         
 
                       </div>
@@ -158,10 +169,13 @@
                               </button>
                             </div>
                             <div class="modal-body">
-                              <form action="/file_upload" method="POST" enctype="multipart/form-data">
+                              <form action="{{route('addToCart.add_user_image')}}" method="POST" enctype="multipart/form-data">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="order_design_id" value="{{$order_design->id}}">
+                                <input type="hidden" name="order_id" value="{{$cart->id}}">
                                 <div class="form-group">
                                   <label for="file">File Upload</label>
-                                  <input type="file" name="file[]" class="form-control-file btn-primary" id="file" multiple>
+                                  <input type="file" name="user_image[]" class="form-control-file btn-primary" id="file" multiple style="display: block;">
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -176,7 +190,7 @@
                       <hr>
                       <h3 style="margin-top: 30px;">Comment</h3>
                       <div class="form-group">
-                        <textarea class="form-control" rows="4" placeholder="Tell us any modification you like to make or add to the design"></textarea>
+                        <textarea class="form-control" rows="4" name="comment[]" placeholder="Tell us any modification you like to make or add to the design">{{$order_design->note}}</textarea>
                       </div>
                     </div>
                   </div>
@@ -193,9 +207,11 @@
             <div class="box-footer d-flex flex-wrap align-items-center justify-content-between">
               <div class="left-col"><a href="{{route('designs.index')}}" class="btn btn-secondary mt-0"><i class="fa fa-chevron-left"></i>Back to Shopping</a></div>
               <div class="right-col">
-                <button type="submit" class="btn btn-template-main">Choose Delivery Options<i class="fa fa-chevron-right"></i></button>
+                <button type="submit" form="submit_first" class="btn btn-template-main">Choose Delivery Options<i class="fa fa-chevron-right"></i></button>
               </div>
             </div>
+            {{csrf_field()}}
+            {{ method_field('POST') }}
           </form>
         </div>
       </div>

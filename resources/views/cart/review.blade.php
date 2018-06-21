@@ -40,30 +40,25 @@
                       <table class="table">
                         <thead>
                           <tr>
-                            <th colspan="2">Product</th>
+                            <th>Design</th>
+                            <th>Size</th>
                             <th>Quantity</th>
-                            <th>Unit price</th>
-                            <th>Discount</th>
-                            <th>Total</th>
+                            <th>People</th>
+                            <th>Price</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td><a href="#"><img src="img/detailsquare.jpg" alt="White Blouse Armani"></a></td>
-                            <td><a href="#">White Blouse Armani</a></td>
-                            <td>2</td>
-                            <td>$123.00</td>
-                            <td>$0.00</td>
-                            <td>$246.00</td>
-                          </tr>
-                          <tr>
-                            <td><a href="#"><img src="img/basketsquare.jpg" alt="Black Blouse Armani"></a></td>
-                            <td><a href="#">Black Blouse Armani</a></td>
-                            <td>1</td>
-                            <td>$200.00</td>
-                            <td>$0.00</td>
-                            <td>$200.00</td>
-                          </tr>
+                          @foreach($order->order_designs as $order_design)
+                            @foreach($order_design->order_design_products as $product)
+                            <tr>
+                              <td><a href="{{$order_design->design->image_path}}"><img src="{{$order_design->design->image_path}}"></a></td>
+                              <td>{{$product->product->name}}</td>
+                              <td>{{$product->quantity}}</td>
+                              <td>{{$order_design->faces}}</td>
+                              <td>{{ (($product->product->price) + ($order_design->faces-1 * $face_price->price)) * ($product->quantity) }} LE</td>
+                            </tr>
+                            @endforeach
+                          @endforeach
                         </tbody>
                         
                       </table>

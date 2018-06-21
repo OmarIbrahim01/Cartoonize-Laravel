@@ -18,4 +18,9 @@ class Order extends Model
     	return $this->belongsTo('App\OrderDeliveryArea');
     }
 
+    public function urgent()
+    {
+    	return $this->belongsTo('App\Urgent');
+    }
+
 }

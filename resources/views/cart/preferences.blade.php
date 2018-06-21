@@ -27,14 +27,14 @@
     <div class="row">
       <div id="checkout" class="col-lg-9">
         <div class="box">
-          <form method="post" action="shop-checkout4.html">
-            <form method="post" action="shop-checkout4.html">
+          <form method="post" action="{{route('SubmitCart.second')}}">
+            
               <ul class="nav nav-pills nav-fill">
                 <li class="nav-item"><a href="{{route('shopping_cart.show')}}" class="nav-link"> <i class="fa fa-map-marker"></i><br>My Order</a></li>
                 <li class="nav-item"><a href="{{route('shopping_cart.preferences')}}" class="nav-link active"><i class="fa fa-truck"></i><br>Delivery Options</a></li>
                 <li class="nav-item"><a href="{{route('shopping_cart.review')}}" class="nav-link"><i class="fa fa-eye"></i><br>Order Review</a></li>
               </ul>
-            </form>
+            
             <div class="content">
 
               <section style="margin-top: 70px; margin-bottom: 45px;">
@@ -44,12 +44,12 @@
                     <div class="col-md-12" >
                       <h1 style="float: none; margin: 0 auto; width: 90%; margin-bottom: 40px; color: #333">Order Options</h1>
                       
-                      <form action="/cart" method="POST" style="float: none; margin: 0 auto; width: 90%;">
+                     
                         {{csrf_field()}}
                         
                         <div id="time">
                           <h4>Handover Time</h4>
-                          <select class="form-control" style="margin-bottom: 30px;">  
+                          <select name="urgent_id" class="form-control" style="margin-bottom: 30px;">  
                             @foreach($urgents as $urgent)
                             <option value="{{$urgent->id}}">{{$urgent->name}} ... <span>+{{$urgent->price}} LE</span></option>
                             @endforeach    
@@ -58,7 +58,7 @@
 
                         <div >
                           <h4>Delievery Type</h4>
-                          <select id="delievery_type" class="form-control" style="; margin-bottom: 30px;">  
+                          <select id="delievery_type" name="delivery_type_id" class="form-control" style="; margin-bottom: 30px;">  
                             <option disabled selected>Select Option</option>
                             @foreach($delivery_types as $delivery_type)
                             <option value="{{$delivery_type->id}}">{{$delivery_type->name}}</option>
@@ -68,7 +68,8 @@
 
                         <div id="store">
                           <h4>Store</h4>
-                          <select  class="form-control" style="; margin-bottom: 30px;">  
+                          <select name="store_id" class="form-control" style="; margin-bottom: 30px;">  
+                            <option disabled selected>Select Option</option>
                             @foreach($stores as $store)
                             <option value="{{$store->id}}">{{$store->name}}</option>
                             @endforeach    
@@ -77,7 +78,8 @@
 
                         <div id="location">
                           <h4>Area Location</h4>
-                          <select  class="form-control" style="; margin-bottom: 30px;">  
+                          <select name="delivery_area_id" name="delivery_area_id" class="form-control" style="; margin-bottom: 30px;">
+                            <option disabled selected>Select Option</option>
                             @foreach($delivery_areas as $delivery_area)
                             <option value="{{$delivery_area->id}}">{{$delivery_area->name}} ... +{{$delivery_area->price}} LE</option>
                             @endforeach    
@@ -87,7 +89,7 @@
                         <div id="address">
                           <h4 style="margin-top: 30px;">Shipping Address</h4>
                           <div class="form-group">
-                            <textarea  class="form-control" rows="4" placeholder="Please enter the shipping address in details"></textarea>
+                            <textarea name="shipping_address" class="form-control" rows="4" placeholder="Please enter the shipping address in details"></textarea>
                           </div>
                         </div>
                         
@@ -102,8 +104,8 @@
             <div class="box-footer d-flex flex-wrap align-items-center justify-content-between">
               <div class="left-col"><a href="shop-checkout3.html" class="btn btn-secondary mt-0"><i class="fa fa-chevron-left"></i>Back to Cart</a></div>
               <div class="right-col">
-                <button type="button" class="btn btn-template-main">Review order<i class="fa fa-chevron-right"></i></button>
-                </form>
+                <button type="submit" class="btn btn-template-main">Continue Review order<i class="fa fa-chevron-right"></i></button>
+                
               </div>
             </div>
           </form>
@@ -154,11 +156,11 @@
   $('#delievery_type').on('change', function () {
     var optionSelected = $("option:selected", this);
     var valueSelected = this.value;
-    if(valueSelected == 1){
+    if(valueSelected == 2){
       $("#store").fadeIn();
       $("#location").fadeOut();
       $("#address").fadeOut();
-    } else if(valueSelected == 2){
+    } else if(valueSelected == 1){
       $("#location").fadeIn();
       $("#address").fadeIn();
       $("#store").fadeOut();

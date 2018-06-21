@@ -86,11 +86,35 @@ Route::post('/add_product_to_cart/{design_id}', [
     'uses' => 'CartController@add_product_to_cart'
 ]);
 
-Route::post('/delete_user_image', [
+Route::delete('/shopping_cart/remove_product_from_cart/{id}', [
+    'as' => 'shopping_cart.delete_design_product',
+    'uses' => 'CartController@remove_product_from_cart'
+]);
+
+Route::post('/add_user_image', [
+    'as' => 'addToCart.add_user_image',
+    'uses' => 'CartController@add_user_image'
+]);
+
+Route::delete('/delete_user_image/{id}', [
     'as' => 'addToCart.deleteUserImage',
     'uses' => 'CartController@delete_user_image'
 ]);
 
+
+////////////////////////////////
+////////Submit Cart////////////
+//////////////////////////////
+
+Route::post('/submit_cart_first_step', [
+    'as' => 'SubmitCart.first',
+    'uses' => 'CartController@submit_first'
+]);
+
+Route::post('/submit_cart_second_step', [
+    'as' => 'SubmitCart.second',
+    'uses' => 'CartController@submit_second'
+]);
 
 
 
