@@ -54,6 +54,33 @@ Route::get('/designs/{id}', [
 ]);
 
 
+
+
+
+
+/////////////////////////////////
+////////Wishlist Routes/////////
+///////////////////////////////
+
+Route::get('/wishlist', [
+    'as' => 'wishlist.index',
+    'uses' => 'WishlistController@index'
+]);
+
+Route::get('/add_to_wishlist/{id}', [
+    'as' => 'wishlist.store',
+    'uses' => 'WishlistController@store'
+]);
+
+Route::get('/remove_from_wishlist/{id}', [
+    'as' => 'wishlist.delete',
+    'uses' => 'WishlistController@destroy'
+]);
+
+
+
+
+
 //Cart Routes
 Route::get('/shopping_cart', [
     'as' => 'shopping_cart.show',
@@ -69,6 +96,9 @@ Route::get('/order_review', [
     'as' => 'shopping_cart.review',
     'uses' => 'CartController@review'
 ]);
+
+
+
 
 
 
@@ -101,6 +131,10 @@ Route::delete('/delete_user_image/{id}', [
     'uses' => 'CartController@delete_user_image'
 ]);
 
+Route::delete('/clear_cart', [
+    'as' => 'addToCart.deleteCart',
+    'uses' => 'CartController@delete_cart'
+]);
 
 ////////////////////////////////
 ////////Submit Cart////////////
@@ -116,9 +150,26 @@ Route::post('/submit_cart_second_step', [
     'uses' => 'CartController@submit_second'
 ]);
 
+Route::post('/submit_cart_third_step', [
+    'as' => 'SubmitCart.third',
+    'uses' => 'CartController@submit_third'
+]);
 
 
 
+/////////////////////////////////////
+/////////////My Orders//////////////
+///////////////////////////////////
+
+Route::get('/my_orders', [
+    'as' => 'my_orders.index',
+    'uses' => 'MyOrdersController@index'
+]);
+
+Route::get('/my_orders/{id}', [
+    'as' => 'my_orders.show',
+    'uses' => 'MyOrdersController@show'
+]);
 
 
 Route::group(['prefix' => 'sudo'], function () {

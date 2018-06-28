@@ -64,13 +64,13 @@
 
                 <h4 style="margin-top: 30px;">Quantity</h4>
                 <div class="form-group">
-                  <input type="number" name="quantity" class="form-control" placeholder="1" required style="display: block;">
+                  <input type="number" name="quantity" class="form-control" placeholder="1" required style="display: block;" value="1">
                 </div>
              
                 <h4 style="margin-top: 30px;">How Many People in The Design</h4>
-                <select class="form-control">
+                <select name="faces" class="form-control">
                   @for($count=1; $count <= 25; $count++)
-                  <option value="{{$count}}" name="faces">{{$count}} People ... <span style="color: red;">+{{($count-1)*$face_price->price}} LE</span></option>
+                  <option value="{{$count}}" >{{$count}} People ... <span style="color: red;">+{{($count-1)*$face_price->price}} LE</span></option>
                   @endfor
                 </select>
 
@@ -88,7 +88,7 @@
                 
                 <p class="text-center" style="margin-top: 50px;">
                   <button type="submit" class="btn btn-template-outlined"><i class="fa fa-shopping-cart"></i> Add to cart</button>
-                  <button type="submit" onclick="window.location.href='#'" data-toggle="tooltip" data-placement="top" title="Add to wishlist" class="btn btn-template-outlined"><i class="fa fa-heart"></i></button>
+                  <button type="button" onclick="window.location.href='{{route('wishlist.store', [$design->id])}}'" data-toggle="tooltip" data-placement="top" title="Add to wishlist" class="btn btn-template-outlined"><i class="fa fa-heart"></i></button>
                 </p>
               </form>
             </div>

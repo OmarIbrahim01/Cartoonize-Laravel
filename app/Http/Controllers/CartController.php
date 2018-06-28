@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Urgent;
+use App\Order;
 use App\DeliveryType;
 use App\Store;
 use App\Product;
@@ -125,7 +126,23 @@ class CartController extends Controller
         return redirect()->route('shopping_cart.show');
     }
 
+    public function delete_cart()
+    {
+        $order = Auth::user()->activeCart();
+        foreach($order->order_designs as $order_design){
 
+            foreach($order_design->order_design_products as $order_design_product){
+                $order_design_product->delete();
+            }
+            foreach($order_design->user_images as $user_image){
+                $user_image->delete();
+            }
+
+            $order_design->delete();
+        }
+        
+        return redirect()->route('shopping_cart.show');
+    }
 
 
     //////////////////////////////////////
@@ -134,8 +151,7 @@ class CartController extends Controller
 
     public function submit_first(Request $request)
     {
-        var_dump($request->comment);
-        var_dump($request->order_design_id);
+        
 
         foreach($request->order_design_id as $key => $order_design_id){
             $comment = $request->comment[$key];
@@ -163,9 +179,12 @@ class CartController extends Controller
         if($delivery_type == 1){
             $order->delivery_area_id = $delivery_area;
             $order->delivery_address = $shipping_address;
+            $order->store_id = null;
             $order->save();
         }elseif($delivery_type == 2){
             $order->store_id = $store_id;
+            $order->delivery_area_id = null;
+            $order->delivery_address = null;
             $order->save();
         }
 
@@ -173,7 +192,17 @@ class CartController extends Controller
     }
 
 
+    public function submit_third(Request $request)
+    {
+        
 
+        $order = Auth::user()->activeCart();
+        $order->order_progress_id = 10;
+        $order->active = false;
+        $order->save();
+
+        return redirect()->route('designs.index');
+    }
 
 
 
@@ -188,6 +217,15 @@ class CartController extends Controller
      */
     public function show()
     {
+        if(!Auth::user()->hasActiveCart()){
+            $cart = new Order;
+            $cart->user_id = Auth::id();
+            $cart->active = true;
+            $cart->order_progress_id = 1;
+            $cart->save();
+        }
+
+        $face_price = DesignFacePrice::first();
         $urgents = Urgent::all();
         $delivery_types = DeliveryType::all();
         $stores = Store::all();
@@ -202,23 +240,102 @@ class CartController extends Controller
             $order_designs = null;
         }
 
+        //////////////////////////
+        ///////Total Calc////////
+        ////////////////////////
+
+        // Order SubTotal
+        $order_subtotal = 0;
+        foreach($cart->order_designs as $order_design){
+            $order_design_faces_price = ($order_design->faces-1) * ($face_price->price);
+            
+            foreach($order_design->order_design_products as $order_design_product){
+                $size_total = ($order_design_product->product->price * $order_design_product->quantity);
+                
+                $order_subtotal += $size_total;
+            }
+            $order_subtotal += $order_design_faces_price;
+        }
+        // Delivery Fee
+        if(isset($order->delivery_area->price)){
+            $delivery_fee = $order->delivery_area->price;
+        }else{
+            $delivery_fee = 0;
+        }
+
+        // Urgent Fee
+        if(isset($order->urgent->price)){
+            $urgent_fee = $order->urgent->price;
+        }else{
+            $urgent_fee = 0;
+        }
+
+       
+
         return view('cart.show', [
             'urgents' => $urgents, 
             'delivery_types' => $delivery_types, 
             'delivery_areas' => $delievery_areas,
             'cart' => $cart,
             'order_designs' => $order_designs,
-            'products' => $products
+            'products' => $products,
+
+            'order_subtotal' => $order_subtotal,
+            'delivery_fee' => $delivery_fee,
+            'urgent_fee' => $urgent_fee
         ]);
+
     }
 
     public function preferences()
     {
+        $order = Auth::user()->activeCart();
+        $face_price = DesignFacePrice::first();
         $urgents = Urgent::all();
         $delivery_types = DeliveryType::all();
         $stores = Store::all();
         $delievery_areas = OrderDeliveryArea::all();
-        return view('cart.preferences', ['urgents' => $urgents, 'delivery_types' => $delivery_types, 'delivery_areas' => $delievery_areas, 'stores' => $stores]);
+
+        //////////////////////////
+        ///////Total Calc////////
+        ////////////////////////
+
+        // Order SubTotal
+        $order_subtotal = 0;
+        foreach($order->order_designs as $order_design){
+            $order_design_faces_price = ($order_design->faces-1) * ($face_price->price);
+            
+            foreach($order_design->order_design_products as $order_design_product){
+                $size_total = ($order_design_product->product->price * $order_design_product->quantity);
+                
+                $order_subtotal += $size_total;
+            }
+            $order_subtotal += $order_design_faces_price;
+        }
+
+        // Delivery Fee
+        if(isset($order->delivery_area->price)){
+            $delivery_fee = $order->delivery_area->price;
+        }else{
+            $delivery_fee = 0;
+        }
+
+        // Urgent Fee
+        if(isset($order->urgent->price)){
+            $urgent_fee = $order->urgent->price;
+        }else{
+            $urgent_fee = 0;
+        }
+
+       
+        return view('cart.preferences', ['urgents' => $urgents,
+                                         'delivery_types' => $delivery_types, 
+                                         'delivery_areas' => $delievery_areas, 
+                                         'stores' => $stores,
+                                         'order_subtotal' => $order_subtotal,
+                                         'delivery_fee' => $delivery_fee,
+                                         'urgent_fee' => $urgent_fee
+                                     ]);
     }
 
     public function review()
@@ -226,27 +343,46 @@ class CartController extends Controller
         $order = Auth::user()->activeCart();
         $face_price = DesignFacePrice::first();
 
+
+        //////////////////////////
+        ///////Total Calc////////
+        ////////////////////////
+
         // Order SubTotal
         $order_subtotal = 0;
         foreach($order->order_designs as $order_design){
             $order_design_faces_price = ($order_design->faces-1) * ($face_price->price);
-            var_dump($order_design_faces_price);
+            
             foreach($order_design->order_design_products as $order_design_product){
                 $size_total = ($order_design_product->product->price * $order_design_product->quantity);
-                var_dump($size_total);
+                
                 $order_subtotal += $size_total;
             }
             $order_subtotal += $order_design_faces_price;
         }
 
-
-
         // Delivery Fee
-        $delivery_fee = $order->delivery_area->price;
+        if(isset($order->delivery_area->price)){
+            $delivery_fee = $order->delivery_area->price;
+        }else{
+            $delivery_fee = 0;
+        }
 
         // Urgent Fee
+        if(isset($order->urgent->price)){
+            $urgent_fee = $order->urgent->price;
+        }else{
+            $urgent_fee = 0;
+        }
 
-        return view('cart.review', ['order' => $order, 'face_price' => $face_price]);
+        return view('cart.review', [
+                'order' => $order, 
+                'face_price' => $face_price,
+
+                'order_subtotal' => $order_subtotal,
+                'delivery_fee' => $delivery_fee,
+                'urgent_fee' => $urgent_fee
+        ]);
     }
 
     /**

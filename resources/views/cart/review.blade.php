@@ -55,7 +55,7 @@
                               <td>{{$product->product->name}}</td>
                               <td>{{$product->quantity}}</td>
                               <td>{{$order_design->faces}}</td>
-                              <td>{{ (($product->product->price) + ($order_design->faces-1 * $face_price->price)) * ($product->quantity) }} LE</td>
+                              <td>{{ ($product->product->price * $product->quantity) + (($order_design->faces-1) * $face_price->price) }} LE</td>
                             </tr>
                             @endforeach
                           @endforeach
@@ -66,19 +66,22 @@
                   </div>
                   <div >
                     <h4>Payment Methods</h4>
-                    <select class="form-control" style="; margin-bottom: 30px;">  
+                    <select name="payment_method" form="place_order" class="form-control" style="; margin-bottom: 30px;">  
                       <option selected>Cash On Delivery</option>
                     </select>
                   </div>
                   <div class="box-footer d-flex flex-wrap align-items-center justify-content-between">
                     <div class="left-col"><a href="shop-checkout3.html" class="btn btn-secondary mt-0"><i class="fa fa-chevron-left"></i>Back to payment method</a></div>
                     <div class="right-col">
-                      <button type="submit" class="btn btn-template-main">Place the order<i class="fa fa-chevron-right"></i></button>
+                      <button type="submit" form="place_order" class="btn btn-template-main">Place the order<i class="fa fa-chevron-right"></i></button>
                     </div>
                   </div>
                 </form>
               </div>
             </div>
+            <form action="{{route('SubmitCart.third')}}" method="POST" id="place_order">
+              {{csrf_field()}}
+            </form>
             <div class="col-lg-3">
               <div id="order-summary" class="box mb-4 p-0">
                 <div class="box-header mt-0">
@@ -90,19 +93,19 @@
                     <tbody>
                       <tr>
                         <td>Order subtotal</td>
-                        <th>$446.00</th>
+                        <th>{{$order_subtotal}} LE</th>
                       </tr>
                       <tr>
                         <td>Shipping and handling</td>
-                        <th>$10.00</th>
+                        <th>{{$delivery_fee}} LE</th>
                       </tr>
                       <tr>
-                        <td>Tax</td>
-                        <th>$0.00</th>
+                        <td>Handover Time</td>
+                        <th>{{$urgent_fee}} LE</th>
                       </tr>
                       <tr class="total">
-                        <td>Total</td>
-                        <th>$456.00</th>
+                        <td>Final Total</td>
+                        <th style="color: darkred;">{{$order_subtotal + $delivery_fee + $urgent_fee}} LE</th>
                       </tr>
                     </tbody>
                   </table>

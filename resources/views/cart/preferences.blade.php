@@ -122,19 +122,19 @@
               <tbody>
                 <tr>
                   <td>Order subtotal</td>
-                  <th>$446.00</th>
+                  <th>{{$order_subtotal}} LE</th>
                 </tr>
                 <tr>
                   <td>Shipping and handling</td>
-                  <th>$10.00</th>
+                  <th>{{$delivery_fee}} LE</th>
                 </tr>
                 <tr>
-                  <td>Tax</td>
-                  <th>$0.00</th>
+                  <td>Handover Time</td>
+                  <th>{{$urgent_fee}} LE</th>
                 </tr>
                 <tr class="total">
-                  <td>Total</td>
-                  <th>$456.00</th>
+                  <td>Final Total</td>
+                  <th style="color: darkred;">{{$order_subtotal + $delivery_fee + $urgent_fee}} LE</th>
                 </tr>
               </tbody>
             </table>

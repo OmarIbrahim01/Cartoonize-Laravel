@@ -20,4 +20,9 @@ class Design extends Model
     {
     	return $this->hasMany('App\OrderDesign');
     }
+
+    public function wishlists()
+    {
+        return $this->hasMany('App\Wishlist');
+    }
 }

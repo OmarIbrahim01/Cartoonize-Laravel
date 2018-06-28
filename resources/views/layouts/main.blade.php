@@ -92,7 +92,9 @@
                 <!-- ========== User dropdown ==================-->
                 <li class="nav-item dropdown"><a href="javascript: void(0)" data-toggle="dropdown" class="dropdown-toggle">{{Auth::user()->name}} <b class="caret"></b></a>
                   <ul class="dropdown-menu">
-                    <li class="dropdown-item"><a href="#" class="nav-link">My Orders</a></li>
+                    <li class="dropdown-item"><a href="{{route('my_orders.index')}}" class="nav-link">My Orders</a></li>
+                    <li class="dropdown-item"><a href="{{route('wishlist.index')}}" class="nav-link">My Wishlist</a></li>
+                    <li class="dropdown-item"><a href="#" class="nav-link">My Account</a></li>
                     
 
                     <li class="dropdown-item"><a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>

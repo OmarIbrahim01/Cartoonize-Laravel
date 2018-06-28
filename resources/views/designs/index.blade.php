@@ -64,6 +64,12 @@
               <div class="text">
                 <h3 class="h5"><a href="{{route('designs.show', $design->id)}}">{{$design->name}}</a></h3>
                 {{-- <p class="price"></p> --}}
+
+                <p class="text-center" style="margin-top: -25px;">
+                  <button type="button" onclick="window.location.href='{{route('designs.show', $design->id)}}'" class="btn btn-template-outlined"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                  <button type="button" onclick="window.location.href='{{route('wishlist.store', [$design->id])}}'" data-toggle="tooltip" data-placement="top" title="Add to wishlist" class="btn btn-template-outlined"><i class="fa fa-heart"></i></button>
+                </p>
+
               </div>
               <div class="ribbon-holder">
               	@if($design->best_selling)
